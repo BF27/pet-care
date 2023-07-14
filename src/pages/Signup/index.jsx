@@ -8,7 +8,7 @@ const Signup = () => {
   const [newUser, setNewUser] = useState(null);
 
   useEffect(() => {
-    console.log(newUser);
+
     if (newUser) {
       const createUser = async () => {
         await createUserWithEmailAndPassword(
@@ -25,8 +25,6 @@ const Signup = () => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const userData = Object.fromEntries(formData);
-    console.log(formData);
-    console.log(userData);
     if (userData.password === userData.confirmPassword) {
       setNewUser({
         name: userData.password,
