@@ -18,8 +18,7 @@ function App() {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        setAuth(user);
-        //navigate("/dashboard");
+        navigate("/dashboard");
       }
     });
   }, [auth]);
