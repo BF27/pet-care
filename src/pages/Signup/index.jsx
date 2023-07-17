@@ -1,14 +1,14 @@
-import { Button, TextField, Box, Link } from "@mui/material";
+import { Button, Box, Link } from "@mui/material";
 import { useState, useEffect } from "react";
 import { auth } from "../../utils/initFirebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import Typography from "@mui/material/Typography";
+import RequiredInput from "../../components/RequiredInput";
 
 const Signup = () => {
   const [newUser, setNewUser] = useState(null);
 
   useEffect(() => {
-
     if (newUser) {
       const createUser = async () => {
         await createUserWithEmailAndPassword(
@@ -61,51 +61,22 @@ const Signup = () => {
         }}
         onSubmit={handleSubmit}
       >
-        <div>
-          <TextField
-            label="Name"
-            id="name"
-            name="name"
-            type={"text"}
-            sx={{ width: "100%" }}
-          />
-        </div>
-        <div>
-          <TextField
-            label="Email"
-            name="email"
-            id="email"
-            type={"email"}
-            sx={{ width: "100%" }}
-          />
-        </div>
-        <div>
-          <TextField
-            id="password"
-            name="password"
-            label="Password"
-            type={"password"}
-            sx={{ width: "100%" }}
-          />
-        </div>
-        <div>
-          <TextField
-            id="confirmPassword"
-            name="confirmPassword"
-            label="Confirm password"
-            type={"password"}
-            sx={{ width: "100%" }}
-          />
-        </div>
+        <RequiredInput label="Email" name="email" type="email" />
+        <RequiredInput label="Password" name="password" type="password" />
+        <RequiredInput
+          label="Confirm password"
+          name="confirmPassword"
+          type="password"
+        />
         <Typography>
           Already have an account? <br />
           Click <Link href="/signin">here</Link> to sign in.
         </Typography>
-        <div>
+        <Box>
           <Button variant="contained" type="submit" sx={{ width: "100%" }}>
             Sign Up
           </Button>
-        </div>
+        </Box>
       </Box>
     </Box>
   );

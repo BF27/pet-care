@@ -1,10 +1,10 @@
-import { Button, TextField, Box, Link } from "@mui/material";
-import Typography from "@mui/material/Typography";
+import { Button, Box, Link, Container, Typography, Checkbox, FormControlLabel } from "@mui/material";
 import { auth } from "../../utils/initFirebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { useContext } from "react";
 import { UserContext, ChangeUserContext } from "../../contexts/userContext";
+import RequiredInput from "../../components/RequiredInput";
 
 const Signin = () => {
   const user = useContext(UserContext);
@@ -40,7 +40,7 @@ const Signin = () => {
   }
 
   return (
-    <Box
+    <Container fixed
       component="main"
       sx={{
         display: "flex",
@@ -64,34 +64,19 @@ const Signin = () => {
         }}
         onSubmit={(e) => handleSubmit(e)}
       >
-        <div>
-          <TextField
-            label="Email"
-            name="email"
-            id="email"
-            type={"email"}
-            sx={{ width: "100%" }}
-          />
-        </div>
-        <div>
-          <TextField
-            name="password"
-            id="password"
-            label="Password"
-            type={"password"}
-            sx={{ width: "100%" }}
-          />
-        </div>
+        <RequiredInput label="Email" name="email" type="email" />
+        <RequiredInput label="Password" name="password" type="password" />
+        <FormControlLabel control={<Checkbox />} label="Remember me" />
         <Typography>
           Click <Link href="/signup">here</Link> to sign up.
         </Typography>
-        <div>
+        <Box>
           <Button variant="contained" type="submit" sx={{ width: "100%" }}>
             Sign In
           </Button>
-        </div>
+        </Box>
       </Box>
-    </Box>
+    </Container>
   );
 };
 

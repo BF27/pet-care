@@ -1,23 +1,34 @@
-import { Route, Routes } from "react-router-dom";
-import "./styles/App.css";
+import {useNavigate, Route, Routes } from "react-router-dom";
 import Landing from "./pages/Landing";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import UserProfile from "./pages/UserProfile";
 import PetProfile from "./pages/PetProfile";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { UserContext, ChangeUserContext } from "./contexts/userContext";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import "./styles/App.css";
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [auth, setAuth] = useState(getAuth());
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setAuth(user);
+        //navigate("/dashboard");
+      }
+    });
+  }, [auth]);
 
   const changeUser = (newUser) => {
-    setUser(newUser);
+    setAuth(newUser);
   };
 
   return (
     <>
-      <UserContext.Provider value={user}>
+      <UserContext.Provider value={auth}>
         <ChangeUserContext.Provider value={changeUser}>
           <Routes>
             <Route path="/" element={<Landing />} />
