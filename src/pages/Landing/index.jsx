@@ -11,11 +11,28 @@ import { Link } from "react-router-dom";
 const Landing = () => {
 
   return (
-    <Container className="main">
+    <Container className="main" sx= {{
 
-    <Box className= "navbar">
+      "width": "100vw;",
+      "height": "100vh",
+    "backgroundImage": 'url("https://img.freepik.com/free-vector/frame-with-dogs-vector-white-background_53876-127700.jpg?w=2000") ' ,
+    "backgroundSize": "cover",
+    "color": "rgb(24, 163, 243)",
+    }}>
+
+    <Box className= "navbar" sx= {{
+      "display": "flex",
+      "flexDirection": "row",
+      "justify-content": "flex-end",
+      "border": "10px solid rgb(86, 85, 85)",
+      "background-color": "rgb(86, 85, 85)"
+    }}>
     
-    <nav className="nav">
+    <nav className="nav" sx= {{
+      "display": "flex",
+      "padding": "10px",
+      "gap": "10px",
+    }}>
       <Link to= "/signin"><Button variant="contained">Sign In</Button></Link> 
 
       <Link to= "/signup"><Button variant="contained">Log In</Button></Link>
@@ -23,7 +40,17 @@ const Landing = () => {
       
     </nav>
     </Box>
-    <Container>
+    <Container sx= {{
+      "line-height": "30px",
+      "margin-top": "50px",
+      "min-height": "150px",
+      "min-width": "400px",
+      "text-align": "center",
+      "border-radius": "50%",
+      "padding": "30px"
+
+    }} >
+     
     <h1 className="intro">Welcome to PetCare App!</h1>
       
     <section className="landing">
@@ -50,7 +77,9 @@ const Landing = () => {
     </h3>
 
     </section>
+  
     </Container>
+  
     </Container>
 
   )
