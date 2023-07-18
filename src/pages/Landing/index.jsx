@@ -28,11 +28,11 @@ const Landing = () => {
       
     <section className="landing">
     <h3 className="first-section">
-    Welcome to PetCareApp! <br />
+     <br />
 
     The Ultimate Pet Care Companion
 
-  Are you a dedicated pet parent who wants to provide the best care for your furry friends? Look no further! Introducing PetCareApp, the all-in-one solution for pet owners like you. Our revolutionary mobile application brings convenience and peace of mind to your fingertips, ensuring your beloved pets receive the love and attention they deserve.
+    Meet PetCareApp, the revolutionary mobile application that offers convenience and peace of mind to dedicated pet parents. Provide your furry friends with the best care they deserve, all in one place
 
 
     </h3>
@@ -41,7 +41,12 @@ const Landing = () => {
     Track Your Pet's Health <br />
 
 
-Never miss an important appointment again! With PetCareApp, you can effortlessly keep track of your pet's medical schedule. From routine check-ups to vaccinations, our app conveniently reminds you of upcoming appointments, ensuring your pet stays healthy and happy. Say goodbye to sticky notes and hello to organized pet care.
+    Effortlessly track your pet's health with PetCareApp's convenient reminders for medical appointments, ensuring a healthy and happy pet without the need for sticky notes.
+
+
+
+
+
     </h3>
 
     </section>
