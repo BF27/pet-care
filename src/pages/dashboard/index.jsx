@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Collapse, Box } from '@mui/material';
+import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Collapse, Box, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import Header from "../../components/Header";
 
@@ -27,7 +27,20 @@ const AnimalTable = () => {
   return (
     <>
     <Header></Header>
-    <TableContainer component={Paper}>
+    <Box
+      component={"main"}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: "1rem",
+        width: "clamp(280px, 40vw, 1000px)",
+        border: 1,
+        padding: "1rem",
+        borderRadius: "1rem",
+      }}
+    >
+    <Typography variant="h2">Your Pet list</Typography>
       <Table>
         <TableHead>
           <TableRow>
@@ -87,7 +100,7 @@ const AnimalTable = () => {
           ))}
         </TableBody>
       </Table>
-    </TableContainer>
+    </Box>
     </>
   );
 };
