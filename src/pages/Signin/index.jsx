@@ -1,46 +1,47 @@
-import { Button, Box, Link, Container, Typography, Checkbox, FormControlLabel } from "@mui/material";
+import {
+  Button,
+  Box,
+  Link,
+  Container,
+  Typography,
+  Checkbox,
+  FormControlLabel,
+} from "@mui/material";
 import { auth } from "../../utils/initFirebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { useEffect, useState } from "react";
-import { useContext } from "react";
-import { UserContext, ChangeUserContext } from "../../contexts/userContext";
+import { useNavigate } from "react-router-dom";
+import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import RequiredInput from "../../components/RequiredInput";
+import { useEffect } from "react";
 
 const Signin = () => {
-  const user = useContext(UserContext);
-  const changeUser = useContext(ChangeUserContext);
-  const [signIn, setSignIn] = useState(false);
-  const [userEmail, setUserEmail] = useState(null);
-  const [userPwd, setUserPwd] = useState(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
-    if(user) {
-      console.log(user.uid)
-    }
-    if (signIn) {
-      signInWithEmailAndPassword(auth, userEmail, userPwd)
-        .then((userCredential) => {
-          changeUser(userCredential.user);
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log(errorCode, errorMessage);
-        });
-    }
-  }, [signIn]);
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navigate("/dashboard");
+      }
+    });
+  }, []);
 
   function handleSubmit(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
     const userData = Object.fromEntries(formData);
-    setUserEmail(userData.email);
-    setUserPwd(userData.password);
-    setSignIn(true);
+
+    signInWithEmailAndPassword(auth, userData.email, userData.password)
+      .then(() => {
+        navigate("/dashboard");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+      });
   }
 
   return (
-    <Container fixed
+    <Container
+      fixed
       component="main"
       sx={{
         display: "flex",

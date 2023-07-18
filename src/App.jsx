@@ -5,40 +5,27 @@ import Signup from "./pages/Signup";
 import UserProfile from "./pages/UserProfile";
 import Dashboard from "./pages/dashboard";
 import { useEffect, useState } from "react";
-import { UserContext, ChangeUserContext } from "./contexts/userContext";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import "./styles/App.css";
 
 function App() {
-  const [auth, setAuth] = useState(getAuth());
+  const [user, setUser] = useState(getAuth().currentUser);
   const navigate = useNavigate();
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        navigate("/dashboard");
-      }
-    });
-  }, [auth]);
-
-  const changeUser = (newUser) => {
-    setAuth(newUser);
-  };
+    if (user) {
+      navigate("/dashboard");
+    }
+  }, [user]);
 
   return (
-    <>
-      <UserContext.Provider value={auth}>
-        <ChangeUserContext.Provider value={changeUser}>
-          <Routes>
-            <Route path="/" element={<Landing />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/signin" element={<Signin />} />
-            <Route path="/user" element={<UserProfile />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-          </Routes>
-        </ChangeUserContext.Provider>
-      </UserContext.Provider>
-    </>
+    <Routes>
+      <Route path="/" element={<Landing />} />
+      <Route path="/signup" element={<Signup />} />
+      <Route path="/signin" element={<Signin />} />
+      <Route path="/user" element={<UserProfile />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+    </Routes>
   );
 }
 
