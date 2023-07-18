@@ -13,12 +13,11 @@ const Landing = () => {
   return (
     <Container className="main">
 
-    <Box>
+    <Box className= "navbar">
     
-    <nav>
-      
-    
-      <Link to= "/signin"><Button variant="contained">Sign In</Button></Link>
+    <nav className="nav">
+      <Link to= "/signin"><Button variant="contained">Sign In</Button></Link> 
+
       <Link to= "/signup"><Button variant="contained">Log In</Button></Link>
       
       
