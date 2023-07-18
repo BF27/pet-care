@@ -4,7 +4,6 @@ import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import UserProfile from "./pages/UserProfile";
 import Dashboard from "./pages/dashboard";
-import Header from "./components/Header";
 import { useEffect, useState } from "react";
 import { UserContext, ChangeUserContext } from "./contexts/userContext";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -36,7 +35,6 @@ function App() {
             <Route path="/signin" element={<Signin />} />
             <Route path="/user" element={<UserProfile />} />
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/header" element={<Header />} />
           </Routes>
         </ChangeUserContext.Provider>
       </UserContext.Provider>

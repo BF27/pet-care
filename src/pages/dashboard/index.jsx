@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Collapse, Box } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import Header from "../../components/Header";
 
 const AnimalTable = () => {
   const [animals, setAnimals] = useState([
@@ -24,6 +25,8 @@ const AnimalTable = () => {
   };
 
   return (
+    <>
+    <Header></Header>
     <TableContainer component={Paper}>
       <Table>
         <TableHead>
@@ -85,6 +88,7 @@ const AnimalTable = () => {
         </TableBody>
       </Table>
     </TableContainer>
+    </>
   );
 };
 
