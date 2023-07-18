@@ -15,7 +15,7 @@ const PetProfile = () => {
       padding: "1rem",
       borderRadius: "1rem",
     }}>
-    <Typography variant="h2">PetProfile</Typography>
+    <Typography variant="h2">Pet Profile</Typography>
     <Box 
       component="form"
       className="pet-adder-form"
@@ -27,10 +27,10 @@ const PetProfile = () => {
     }}>
       <TextField type = "text" label="Type your pet name" id="petName" name="petName" required/>
       <TextField type = "text" label="Type your pet gender" id="petGender" name="petGender" required/>
+      <TextField type = "text" label="Type your pet species" id="petSpecies" name="petSpecies" required/>
       <TextField type = "text" label="Type your pet breed" id="petBreed" name="petBreed" required/>
       <TextField type = "text" label="Type your pet date of birth" id="petBirth" name="petBirth" required/>
       <TextField type = "text" label="Type your pet chip number" id="petChipNum" name="petChipNum" required/>
-      <TextField type = "text" label="Type your pet date of birth" id="petBirth" name="petBirth" required/>
       <Button variant="contained" type="submit">Submit</Button>
     </Box>
     </Box>
