@@ -1,6 +1,21 @@
 import { Box, Typography, TextField, Button, Avatar } from "@mui/material";
+import { updateProfile, updateEmail } from "firebase/auth";
+import { auth } from "../../utils/initFirebase";
 
 const UserProfile = () => {
+  function handleSubmit(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const userData = Object.fromEntries(formData);
+    updateProfile(auth.currentUser, {
+      displayName: `${userData.lastName} ${userData.firstName}`,
+    })
+      .then(() => updateEmail(auth.currentUser, userData.userEmail))
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   return (
     <Box
       component={"main"}
@@ -19,6 +34,7 @@ const UserProfile = () => {
       <Box
         component="form"
         className="user-adder-form"
+        onSubmit={handleSubmit}
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -42,10 +58,10 @@ const UserProfile = () => {
           required
         />
         <TextField
-          type="text"
+          type="email"
           label="Type your e-mail address"
-          id="userAddress"
-          name="userAddress"
+          id="userEmail"
+          name="userEmail"
           required
         />
         <Button variant="contained" type="submit">
