@@ -1,6 +1,5 @@
-import { AppBar, Toolbar, Avatar } from "@mui/material";
+import { AppBar, Toolbar, Avatar, Typography } from "@mui/material";
 import LogOutBtn from "./LogOutBtn";
-import HeaderUserName from "./HeaderUserName";
 import { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../utils/initFirebase";
@@ -13,6 +12,7 @@ const Header = () => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        console.log(user)
         setUserName(user.displayName);
         setUserPhoto(user.photoURL);
         setUserEmail(user.email);
@@ -24,7 +24,9 @@ const Header = () => {
     <AppBar>
       <Toolbar sx={{ justifyContent: "flex-end", gap: "1rem" }}>
         <Avatar src={userPhoto} alt="Profile Picture" />
-        <HeaderUserName userName={userName ? userName : userEmail} />
+        <Typography variant="h6" component="div">
+          {userName ? userName : userEmail}
+        </Typography>
         <LogOutBtn />
       </Toolbar>
     </AppBar>
