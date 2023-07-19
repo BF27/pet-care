@@ -1,8 +1,10 @@
 import { Box, Typography, TextField, Button, Avatar } from "@mui/material";
 import { updateProfile, updateEmail } from "firebase/auth";
 import { auth } from "../../utils/initFirebase";
+import { useNavigate } from "react-router-dom";
 
 const UserProfile = () => {
+  const navigate = useNavigate();
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -11,6 +13,7 @@ const UserProfile = () => {
       displayName: `${userData.lastName} ${userData.firstName}`,
     })
       .then(() => updateEmail(auth.currentUser, userData.userEmail))
+      .then(() => {navigate("/dashboard")})
       .catch((error) => {
         console.log(error);
       });

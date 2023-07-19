@@ -4,21 +4,20 @@ import { auth } from "../../utils/initFirebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import Typography from "@mui/material/Typography";
 import RequiredInput from "../../components/RequiredInput";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [newUser, setNewUser] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (newUser) {
-      const createUser = async () => {
-        await createUserWithEmailAndPassword(
+    if (newUser) 
+     createUserWithEmailAndPassword(
           auth,
           newUser.email,
           newUser.password
-        );
-      };
-      createUser();
-    }
+        )
+        .then(() => {navigate("/user")}).catch(error => {console.log(error)})
   }, [newUser]);
 
   function handleSubmit(e) {
