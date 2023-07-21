@@ -1,10 +1,12 @@
 import { Box, Typography, TextField, Button } from "@mui/material";
 import { db, auth } from "../../utils/initFirebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useId } from "react";
 import { doc, getDoc, setDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 const PetProfile = () => {
+  const navigate = useNavigate();
   const [userId, setUserId] = useState(null);
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -15,10 +17,13 @@ const PetProfile = () => {
   }, []);
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const formData = new FormData(event.target);
-    const petData = Object.fromEntries(formData);
     const docRef = doc(db, "users", userId);
     const docSnap = await getDoc(docRef);
+    const petId = docSnap.data().pets.length;
+    const formData = new FormData(event.target);
+    formData.append("petId", petId);
+    const petData = Object.fromEntries(formData);
+   
 
     if (docSnap.exists()) {
       await setDoc(doc(db, "users", userId), {
@@ -29,6 +34,7 @@ const PetProfile = () => {
         pets: [petData],
       });
     }
+    navigate("/dashboard");
   };
   return (
     <Box

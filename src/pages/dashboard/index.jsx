@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Table,
@@ -13,29 +13,31 @@ import EditIcon from "@mui/icons-material/Edit";
 import Header from "../../components/Header";
 import TableHeader from "./components/TableHeader";
 import { useNavigate } from "react-router-dom";
-
+import { onAuthStateChanged } from "firebase/auth";
+import { auth, db } from "../../utils/initFirebase";
+import { doc, getDoc } from "firebase/firestore";
 
 const AnimalTable = () => {
-  const [animals, setAnimals] = useState([
-    {
-      id: 1,
-      name: "Buksi",
-      gender: "Hím",
-      species: "kutya",
-      breed: "Német juhász",
-      birthDate: "2000-01-01",
-      chipNumber: "123456",
-    },
-    {
-      id: 2,
-      name: "Sanyi",
-      gender: "Nőstény",
-      species: "cica",
-      breed: "Perzsa",
-      birthDate: "2001-02-02",
-      chipNumber: "654321",
-    },
-  ]);
+  const [animals, setAnimals] = useState([]);
+  const [userId, setUserId] = useState(null);
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUserId(user.uid);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    if (userId) {
+      const docRef = doc(db, "users", userId);
+      getDoc(docRef)
+        .then((item) => setAnimals(item.data().pets))
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [userId]);
 
   const [expandedAnimalId, setExpandedAnimalId] = useState(null);
 
@@ -48,14 +50,13 @@ const AnimalTable = () => {
   };
 
   const handleDelete = (id) => {
-    const updatedAnimals = animals.filter((animal) => animal.id !== id);
-    setAnimals(updatedAnimals);
+    
   };
 
   const navigate = useNavigate();
   const handleNewPetButton = () => {
     navigate("/pet");
-  }
+  };
 
   return (
     <>
@@ -77,17 +78,17 @@ const AnimalTable = () => {
         <Table>
           <TableHeader />
           <TableBody>
-            {animals.map((animal) => (
-              <React.Fragment key={animal.id}>
+            {animals.map((animal, i) => (
+              <React.Fragment key={i}>
                 <TableRow>
-                  <TableCell>{animal.name}</TableCell>
-                  <TableCell>{animal.species}</TableCell>
+                  <TableCell>{animal.petName}</TableCell>
+                  <TableCell>{animal.petSpecies}</TableCell>
                   <TableCell>
                     <Button
                       variant="outlined"
                       color="primary"
                       size="small"
-                      onClick={() => handleExpand(animal.id)}
+                      onClick={() => handleExpand(animal.petId)}
                     >
                       Data
                     </Button>
@@ -96,7 +97,7 @@ const AnimalTable = () => {
                 <TableRow>
                   <TableCell colSpan={3}>
                     <Collapse
-                      in={expandedAnimalId === animal.id}
+                      in={expandedAnimalId === animal.petId}
                       timeout="auto"
                       unmountOnExit
                     >
@@ -108,7 +109,7 @@ const AnimalTable = () => {
                           alignItems: "center",
                         }}
                       >
-                        <p>Breed: {animal.breed}</p>
+                        <p>Breed: {animal.petBreed}</p>
                         <EditIcon />
                       </Box>
                       <Box
@@ -119,7 +120,7 @@ const AnimalTable = () => {
                           alignItems: "center",
                         }}
                       >
-                        <p>Gender: {animal.gender}</p>
+                        <p>Gender: {animal.petGender}</p>
                         <EditIcon />
                       </Box>
                       <Box
@@ -130,7 +131,7 @@ const AnimalTable = () => {
                           alignItems: "center",
                         }}
                       >
-                        <p>Date of birth: {animal.birthDate}</p>
+                        <p>Date of birth: {animal.petBirth}</p>
                         <EditIcon />
                       </Box>
                       <Box
@@ -141,14 +142,14 @@ const AnimalTable = () => {
                           alignItems: "center",
                         }}
                       >
-                        <p>Chip number: {animal.chipNumber}</p>
+                        <p>Chip number: {animal.petChipNum}</p>
                         <EditIcon />
                       </Box>
                       <Button
                         variant="outlined"
                         color="secondary"
                         size="small"
-                        onClick={() => handleDelete(animal.id)}
+                        onClick={() => handleDelete(animal.petId)}
                       >
                         Delete
                       </Button>
@@ -160,7 +161,12 @@ const AnimalTable = () => {
           </TableBody>
         </Table>
         <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
-          <Button variant="outlined" color="primary" size="medium" onClick={handleNewPetButton}>
+          <Button
+            variant="outlined"
+            color="primary"
+            size="medium"
+            onClick={handleNewPetButton}
+          >
             Add new pet
           </Button>
         </Box>
