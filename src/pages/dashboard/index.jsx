@@ -4,10 +4,7 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableContainer,
-  TableHead,
   TableRow,
-  Paper,
   Collapse,
   Box,
   Typography,
@@ -15,6 +12,8 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import Header from "../../components/Header";
 import TableHeader from "./components/TableHeader";
+import { useNavigate } from "react-router-dom";
+
 
 const AnimalTable = () => {
   const [animals, setAnimals] = useState([
@@ -52,6 +51,11 @@ const AnimalTable = () => {
     const updatedAnimals = animals.filter((animal) => animal.id !== id);
     setAnimals(updatedAnimals);
   };
+
+  const navigate = useNavigate();
+  const handleNewPetButton = () => {
+    navigate("/pet");
+  }
 
   return (
     <>
@@ -155,6 +159,11 @@ const AnimalTable = () => {
             ))}
           </TableBody>
         </Table>
+        <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
+          <Button variant="outlined" color="primary" size="medium" onClick={handleNewPetButton}>
+            Add new pet
+          </Button>
+        </Box>
       </Box>
     </>
   );
