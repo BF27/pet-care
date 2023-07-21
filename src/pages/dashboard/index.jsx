@@ -1,25 +1,27 @@
 import React, { useEffect, useState } from "react";
-import {
-  Button,
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-  Collapse,
-  Box,
-  Typography,
-} from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
+import { Table, TableBody, Box, Typography } from "@mui/material";
 import Header from "../../components/Header";
 import TableHeader from "./components/TableHeader";
-import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../../utils/initFirebase";
 import { doc, getDoc } from "firebase/firestore";
+import MainTableRow from "./components/MainTableRow";
+import CollapsingRow from "./components/CollapsingRow";
+import AddNewPetBtn from "./components/AddNewPetBtn";
 
 const AnimalTable = () => {
   const [animals, setAnimals] = useState([]);
   const [userId, setUserId] = useState(null);
+  const [expandedAnimalId, setExpandedAnimalId] = useState(null);
+
+  const changeExpandedAnimalId = (id) => {
+    setExpandedAnimalId(id);
+  };
+  
+  const changeAnimals = (newAnimals) => {
+    setAnimals(newAnimals);
+  };
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -38,25 +40,6 @@ const AnimalTable = () => {
         });
     }
   }, [userId]);
-
-  const [expandedAnimalId, setExpandedAnimalId] = useState(null);
-
-  const handleExpand = (id) => {
-    if (expandedAnimalId === id) {
-      setExpandedAnimalId(null);
-    } else {
-      setExpandedAnimalId(id);
-    }
-  };
-
-  const handleDelete = (id) => {
-    
-  };
-
-  const navigate = useNavigate();
-  const handleNewPetButton = () => {
-    navigate("/pet");
-  };
 
   return (
     <>
@@ -80,96 +63,29 @@ const AnimalTable = () => {
           <TableBody>
             {animals.map((animal, i) => (
               <React.Fragment key={i}>
-                <TableRow>
-                  <TableCell>{animal.petName}</TableCell>
-                  <TableCell>{animal.petSpecies}</TableCell>
-                  <TableCell>
-                    <Button
-                      variant="outlined"
-                      color="primary"
-                      size="small"
-                      onClick={() => handleExpand(animal.petId)}
-                    >
-                      Data
-                    </Button>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell colSpan={3}>
-                    <Collapse
-                      in={expandedAnimalId === animal.petId}
-                      timeout="auto"
-                      unmountOnExit
-                    >
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: "row",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                        }}
-                      >
-                        <p>Breed: {animal.petBreed}</p>
-                        <EditIcon />
-                      </Box>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: "row",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                        }}
-                      >
-                        <p>Gender: {animal.petGender}</p>
-                        <EditIcon />
-                      </Box>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: "row",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                        }}
-                      >
-                        <p>Date of birth: {animal.petBirth}</p>
-                        <EditIcon />
-                      </Box>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: "row",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                        }}
-                      >
-                        <p>Chip number: {animal.petChipNum}</p>
-                        <EditIcon />
-                      </Box>
-                      <Button
-                        variant="outlined"
-                        color="secondary"
-                        size="small"
-                        onClick={() => handleDelete(animal.petId)}
-                      >
-                        Delete
-                      </Button>
-                    </Collapse>
-                  </TableCell>
-                </TableRow>
+                <MainTableRow
+                  petId={animal.petId}
+                  petName={animal.petName}
+                  petSpecies={animal.petSpecies}
+                  expandedAnimalId={expandedAnimalId}
+                  changeExpandedAnimalId={changeExpandedAnimalId}
+                />
+                <CollapsingRow
+                  userId={userId}
+                  petId={animal.petId}
+                  animals={animals}
+                  changeAnimals={changeAnimals}
+                  expandedAnimalId={expandedAnimalId}
+                  petBreed={animal.petBreed}
+                  petGender={animal.petGender}
+                  petBirth={animal.petBirth}
+                  petChipNum={animal.petChipNum}
+                />
               </React.Fragment>
             ))}
           </TableBody>
         </Table>
-        <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
-          <Button
-            variant="outlined"
-            color="primary"
-            size="medium"
-            onClick={handleNewPetButton}
-          >
-            Add new pet
-          </Button>
-        </Box>
+        <AddNewPetBtn />
       </Box>
     </>
   );

@@ -4,6 +4,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState, useId } from "react";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
 const PetProfile = () => {
   const navigate = useNavigate();
@@ -19,11 +20,10 @@ const PetProfile = () => {
     event.preventDefault();
     const docRef = doc(db, "users", userId);
     const docSnap = await getDoc(docRef);
-    const petId = docSnap.data().pets.length;
+    const petId = uuidv4();
     const formData = new FormData(event.target);
     formData.append("petId", petId);
     const petData = Object.fromEntries(formData);
-   
 
     if (docSnap.exists()) {
       await setDoc(doc(db, "users", userId), {
