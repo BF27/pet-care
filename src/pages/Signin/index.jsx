@@ -11,14 +11,18 @@ import { auth } from "../../utils/initFirebase";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import RequiredInput from "../../components/RequiredInput";
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
+import { ChangeUserContext } from "../../contexts/UserContext";
 
 const Signin = () => {
+  const changeUser = useContext(ChangeUserContext);
+
   const navigate = useNavigate();
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         navigate("/dashboard");
+        changeUser(user)
       }
     });
   }, []);

@@ -1,43 +1,35 @@
-import React, { useEffect, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import { Table, TableBody, Box, Typography } from "@mui/material";
 import TableHeader from "./components/TableHeader";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth, db } from "../../utils/initFirebase";
+import { db } from "../../utils/initFirebase";
 import { doc, getDoc } from "firebase/firestore";
 import MainTableRow from "./components/MainTableRow";
 import CollapsingRow from "./components/CollapsingRow";
+import { UserContext } from "../../contexts/UserContext";
 
-const AnimalTable = () => {
+const Dashboard = () => {
+  const user = useContext(UserContext);
   const [animals, setAnimals] = useState([]);
-  const [userId, setUserId] = useState(null);
   const [expandedAnimalId, setExpandedAnimalId] = useState(null);
 
   const changeExpandedAnimalId = (id) => {
     setExpandedAnimalId(id);
   };
-  
+
   const changeAnimals = (newAnimals) => {
     setAnimals(newAnimals);
   };
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUserId(user.uid);
-      }
-    });
-  }, []);
-
-  useEffect(() => {
-    if (userId) {
-      const docRef = doc(db, "users", userId);
+    if (user) {
+      const docRef = doc(db, "users", user.uid);
       getDoc(docRef)
         .then((item) => setAnimals(item.data().pets))
         .catch((error) => {
           console.log(error);
         });
     }
-  }, [userId]);
+  }, [user]);
 
   return (
     <>
@@ -59,7 +51,7 @@ const AnimalTable = () => {
           <TableHeader />
           <TableBody>
             {animals.map((animal, i) => (
-              <React.Fragment key={i}>
+              <Fragment key={i}>
                 <MainTableRow
                   petId={animal.petId}
                   petName={animal.petName}
@@ -68,17 +60,12 @@ const AnimalTable = () => {
                   changeExpandedAnimalId={changeExpandedAnimalId}
                 />
                 <CollapsingRow
-                  userId={userId}
-                  petId={animal.petId}
+                  index={i}
+                  expandedAnimalId={expandedAnimalId}
                   animals={animals}
                   changeAnimals={changeAnimals}
-                  expandedAnimalId={expandedAnimalId}
-                  petBreed={animal.petBreed}
-                  petGender={animal.petGender}
-                  petBirth={animal.petBirth}
-                  petChipNum={animal.petChipNum}
                 />
-              </React.Fragment>
+              </Fragment>
             ))}
           </TableBody>
         </Table>
@@ -87,4 +74,4 @@ const AnimalTable = () => {
   );
 };
 
-export default AnimalTable;
+export default Dashboard;
