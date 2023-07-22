@@ -43,7 +43,6 @@ const AnimalTable = () => {
 
   return (
     <>
-      <Header />
       <Box
         component={"main"}
         sx={{

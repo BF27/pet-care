@@ -6,18 +6,21 @@ import UserProfile from "./pages/UserProfile";
 import Dashboard from "./pages/dashboard";
 import PetProfile from "./pages/PetProfile";
 import "./styles/App.css";
+import Header from "./components/Header";
 
 function App() {
-
   return (
-    <Routes>
-      <Route path="/" element={<Landing />} />
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/signin" element={<Signin />} />
-      <Route path="/user" element={<UserProfile />} />
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/pet" element={<PetProfile />} />
-    </Routes>
+    <>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/user" element={<UserProfile />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/pet" element={<PetProfile />} />
+      </Routes>
+    </>
   );
 }
 
