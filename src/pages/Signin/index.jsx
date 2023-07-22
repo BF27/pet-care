@@ -2,7 +2,7 @@ import {
   Button,
   Box,
   Link,
-  Container,
+  Paper,
   Typography,
   Checkbox,
   FormControlLabel,
@@ -22,7 +22,7 @@ const Signin = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         navigate("/dashboard");
-        changeUser(user)
+        changeUser(user);
       }
     });
   }, []);
@@ -44,8 +44,8 @@ const Signin = () => {
   }
 
   return (
-    <Container
-      fixed
+    <Paper
+      elevation={4}
       component="main"
       sx={{
         display: "flex",
@@ -53,9 +53,7 @@ const Signin = () => {
         alignItems: "center",
         gap: "1rem",
         width: "clamp(280px, 26vw, 480px)",
-        border: 1,
         padding: "1rem",
-        borderRadius: "1rem",
       }}
     >
       <Typography variant="h2">Sign In</Typography>
@@ -81,7 +79,7 @@ const Signin = () => {
           </Button>
         </Box>
       </Box>
-    </Container>
+    </Paper>
   );
 };
 

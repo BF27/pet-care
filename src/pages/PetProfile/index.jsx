@@ -1,7 +1,7 @@
-import { Box, Typography, TextField, Button } from "@mui/material";
+import { Box, Typography, TextField, Button, Paper } from "@mui/material";
 import { db, auth } from "../../utils/initFirebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { useEffect, useState, useId } from "react";
+import { useEffect, useState } from "react";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
@@ -37,17 +37,16 @@ const PetProfile = () => {
     navigate("/dashboard");
   };
   return (
-    <Box
-      component={"main"}
+    <Paper
+      elevation={4}
+      component="main"
       sx={{
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         gap: "1rem",
         width: "clamp(280px, 26vw, 480px)",
-        border: 1,
         padding: "1rem",
-        borderRadius: "1rem",
       }}
     >
       <Typography variant="h2">Pet Profile</Typography>
@@ -108,7 +107,7 @@ const PetProfile = () => {
           Submit
         </Button>
       </Box>
-    </Box>
+    </Paper>
   );
 };
 

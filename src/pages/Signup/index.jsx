@@ -1,4 +1,4 @@
-import { Button, Box, Link } from "@mui/material";
+import { Button, Box, Link, Paper } from "@mui/material";
 import { useState, useEffect } from "react";
 import { auth } from "../../utils/initFirebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -11,13 +11,14 @@ const Signup = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (newUser) 
-     createUserWithEmailAndPassword(
-          auth,
-          newUser.email,
-          newUser.password
-        )
-        .then(() => {navigate("/user")}).catch(error => {console.log(error)})
+    if (newUser)
+      createUserWithEmailAndPassword(auth, newUser.email, newUser.password)
+        .then(() => {
+          navigate("/user");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
   }, [newUser]);
 
   function handleSubmit(e) {
@@ -36,7 +37,8 @@ const Signup = () => {
   }
 
   return (
-    <Box
+    <Paper
+      elevation={4}
       component="main"
       sx={{
         display: "flex",
@@ -44,9 +46,7 @@ const Signup = () => {
         alignItems: "center",
         gap: "1rem",
         width: "clamp(280px, 26vw, 480px)",
-        border: 1,
         padding: "1rem",
-        borderRadius: "1rem",
       }}
     >
       <Typography variant="h2">Sign Up</Typography>
@@ -77,7 +77,7 @@ const Signup = () => {
           </Button>
         </Box>
       </Box>
-    </Box>
+    </Paper>
   );
 };
 
