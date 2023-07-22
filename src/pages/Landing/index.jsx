@@ -34,9 +34,6 @@ const Landing = () => {
           <Button variant="contained" onClick={() => handleClick("signup")}>
             Sign up
           </Button>
-          <Button variant="outlined" onClick={() => handleClick("signin")}>
-            Log in
-          </Button>
         </Box>
       </Box>
     </Container>
