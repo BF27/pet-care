@@ -7,26 +7,23 @@ import {
   Button,
 } from "@mui/material";
 import LogOutBtn from "./LogOutBtn";
-import { useEffect, useState } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../utils/initFirebase";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../contexts/UserContext";
+
 
 const Header = () => {
-  const [user, setUser] = useState(null);
+  const user = useContext(UserContext);
   const [userName, setUserName] = useState(null);
   const [userPhoto, setUserPhoto] = useState(null);
   const [userEmail, setUserEmail] = useState(null);
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
       if (user) {
-        setUser(user);
         setUserName(user.displayName);
         setUserPhoto(user.photoURL);
         setUserEmail(user.email);
       }
-    });
   }, [user]);
 
   const navigate = useNavigate();
