@@ -6,9 +6,8 @@ import { useContext } from "react";
 import { UserContext } from "../../../contexts/UserContext";
 
 
-const CollapsingRow = ({ index, expandedAnimalId, animals, changeAnimals }) => {
+const CollapsingRow = ({ animal, expandedAnimalId, animals, changeAnimals }) => {
   const user = useContext(UserContext);
-  const pet = animals[index];
 
   const handleDelete = async (id) => {
     const newPetList = animals.filter((animal) => animal.petId !== id);
@@ -21,39 +20,39 @@ const CollapsingRow = ({ index, expandedAnimalId, animals, changeAnimals }) => {
   return (
     <TableRow>
       <TableCell colSpan={3}>
-        <Collapse in={expandedAnimalId === pet.petId} timeout="auto" unmountOnExit>
+        <Collapse in={expandedAnimalId === animal.petId} timeout="auto" unmountOnExit>
           <CollapsingDataRow
             userId={user.uid}
-            petId={pet.petId}
+            petId={animal.petId}
             title="Breed"
-            value={pet.petBreed}
+            value={animal.petBreed}
             dataField={"petBreed"}
             animals={animals}
             changeAnimals={changeAnimals}
           />
           <CollapsingDataRow
             userId={user.uid}
-            petId={pet.petId}
+            petId={animal.petId}
             title="Gender"
-            value={pet.petGender}
+            value={animal.petGender}
             dataField={"petGender"}
             animals={animals}
             changeAnimals={changeAnimals}
           />
           <CollapsingDataRow
             userId={user.uid}
-            petId={pet.petId}
+            petId={animal.petId}
             title="Date of birth"
-            value={pet.petBirth}
+            value={animal.petBirth}
             dataField={"petBirth"}
             animals={animals}
             changeAnimals={changeAnimals}
           />
           <CollapsingDataRow
             userId={user.uid}
-            petId={pet.petId}
+            petId={animal.petId}
             title="Chip number"
-            value={pet.petChipNum}
+            value={animal.petChipNum}
             dataField={"petChipNum"}
             animals={animals}
             changeAnimals={changeAnimals}
@@ -63,7 +62,7 @@ const CollapsingRow = ({ index, expandedAnimalId, animals, changeAnimals }) => {
             variant="outlined"
             color="secondary"
             size="small"
-            onClick={() => handleDelete(pet.petId)}
+            onClick={() => handleDelete(animal.petId)}
           >
             Delete
           </Button>

@@ -53,14 +53,12 @@ const Dashboard = () => {
             {animals.map((animal, i) => (
               <Fragment key={i}>
                 <MainTableRow
-                  petId={animal.petId}
-                  petName={animal.petName}
-                  petSpecies={animal.petSpecies}
+                  animal={animal}
                   expandedAnimalId={expandedAnimalId}
                   changeExpandedAnimalId={changeExpandedAnimalId}
                 />
                 <CollapsingRow
-                  index={i}
+                  animal={animal}
                   expandedAnimalId={expandedAnimalId}
                   animals={animals}
                   changeAnimals={changeAnimals}

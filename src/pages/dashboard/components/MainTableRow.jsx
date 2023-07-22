@@ -1,12 +1,6 @@
 import { TableRow, TableCell, Button } from "@mui/material";
 
-const MainTableRow = ({
-  petName,
-  petSpecies,
-  petId,
-  expandedAnimalId,
-  changeExpandedAnimalId,
-}) => {
+const MainTableRow = ({ animal, expandedAnimalId, changeExpandedAnimalId }) => {
   const handleExpand = (id) => {
     if (expandedAnimalId === id) {
       changeExpandedAnimalId(null);
@@ -17,14 +11,14 @@ const MainTableRow = ({
 
   return (
     <TableRow>
-      <TableCell>{petName}</TableCell>
-      <TableCell>{petSpecies}</TableCell>
+      <TableCell>{animal.petName}</TableCell>
+      <TableCell>{animal.petSpecies}</TableCell>
       <TableCell>
         <Button
           variant="outlined"
           color="primary"
           size="small"
-          onClick={() => handleExpand(petId)}
+          onClick={() => handleExpand(animal.petId)}
         >
           Data
         </Button>
