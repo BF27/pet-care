@@ -8,7 +8,7 @@ const AddNewPetBtn = () => {
   return (
     <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
       <Button
-        variant="outlined"
+        variant="contained"
         color="primary"
         size="medium"
         onClick={handleNewPetButton}

@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Table, TableBody, Box, Typography } from "@mui/material";
-import Header from "../../components/Header";
 import TableHeader from "./components/TableHeader";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../../utils/initFirebase";
 import { doc, getDoc } from "firebase/firestore";
 import MainTableRow from "./components/MainTableRow";
 import CollapsingRow from "./components/CollapsingRow";
-import AddNewPetBtn from "./components/AddNewPetBtn";
 
 const AnimalTable = () => {
   const [animals, setAnimals] = useState([]);
@@ -84,7 +82,6 @@ const AnimalTable = () => {
             ))}
           </TableBody>
         </Table>
-        <AddNewPetBtn />
       </Box>
     </>
   );
