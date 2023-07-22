@@ -1,14 +1,28 @@
-import { Box, Typography, TextField, Button, Paper } from "@mui/material";
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Paper,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+} from "@mui/material";
 import { db, auth } from "../../utils/initFirebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+import { DatePicker } from "@mui/x-date-pickers";
+import { format } from "date-fns";
 
 const PetProfile = () => {
+  const date = new Date();
   const navigate = useNavigate();
   const [userId, setUserId] = useState(null);
+  const [birthDate, setBirthDate] = useState(date);
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -23,6 +37,7 @@ const PetProfile = () => {
     const petId = uuidv4();
     const formData = new FormData(event.target);
     formData.append("petId", petId);
+    formData.append("petBirth", birthDate);
     const petData = Object.fromEntries(formData);
 
     if (docSnap.exists()) {
@@ -68,13 +83,19 @@ const PetProfile = () => {
           name="petName"
           required
         />
-        <TextField
-          type="text"
-          label="Type your pet gender"
-          id="petGender"
-          name="petGender"
-          required
-        />
+        <FormControl fullWidth>
+          <InputLabel id="gender-label">Gender</InputLabel>
+          <Select
+            labelId="gender-label"
+            label="Gender"
+            id="petGender"
+            name="petGender"
+            required
+          >
+            <MenuItem value={"Male"}>Male</MenuItem>
+            <MenuItem value={"Female"}>Female</MenuItem>
+          </Select>
+        </FormControl>
         <TextField
           type="text"
           label="Type your pet species"
@@ -89,15 +110,16 @@ const PetProfile = () => {
           name="petBreed"
           required
         />
-        <TextField
-          type="text"
-          label="Type your pet date of birth"
+        <DatePicker
+          label="Enter your pet date of birth"
           id="petBirth"
           name="petBirth"
+          defaultValue={birthDate}
+          onChange={(date) => setBirthDate(format(date, "yyyy.MM.dd"))}
           required
         />
         <TextField
-          type="text"
+          type="number"
           label="Type your pet chip number"
           id="petChipNum"
           name="petChipNum"
