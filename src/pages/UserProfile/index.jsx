@@ -45,7 +45,7 @@ const UserProfile = () => {
           width: "100%",
         }}
       >
-        <Avatar variant="rounded">I</Avatar>
+       {/*  <Avatar variant="rounded">I</Avatar> */}
         <TextField
           type="text"
           label="Type your last name"

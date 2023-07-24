@@ -64,7 +64,7 @@ const PetProfile = () => {
         padding: "1rem",
       }}
     >
-      <Typography variant="h2">Pet Profile</Typography>
+      <Typography variant="h2">Add New Pet</Typography>
       <Box
         component="form"
         className="pet-adder-form"
