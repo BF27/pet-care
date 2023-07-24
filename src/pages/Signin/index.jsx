@@ -69,7 +69,7 @@ const Signin = () => {
       >
         <RequiredInput label="Email" name="email" type="email" />
         <RequiredInput label="Password" name="password" type="password" />
-        <FormControlLabel control={<Checkbox />} label="Remember me" />
+        {/* <FormControlLabel control={<Checkbox />} label="Remember me" /> */}
         <Typography>
           Click <Link href="/signup">here</Link> to sign up.
         </Typography>
